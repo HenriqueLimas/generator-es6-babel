@@ -1,18 +1,44 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-	    <title>ES6 Babel Model</title>
-	</head>
+<head>
+    <title>ES6 Babel Model</title>
 
-	<body>
-	    <script src="jspm_packages/system.js"></script>
-	    <script src="config.js"></script>
+    <link rel="stylesheet" type="text/css" href="jspm_packages/github/twbs/bootstrap%403.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+</head>
 
-	    <script>
-		    System.baseUrl = 'dist';
-		    System.import('main').catch(console.error.bind(console));
-	    </script>
-	</body>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                   Ecmascript 6
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Hello, Ecmascript 6</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>User class</h3>
+                <table id="users" class="table table-striped"></table>
+            </div>
+        </div>
+    </div>
+
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+
+    <script>
+    System.baseUrl = 'dist';
+    System.import('main').catch(console.error.bind(console));
+    </script>
+</body>
 
 </html>
