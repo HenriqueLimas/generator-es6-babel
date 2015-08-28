@@ -89,11 +89,18 @@ module.exports = yeoman.generators.Base.extend({
       return;
     }
 
-    this.installDependencies({
-      bower: false
-    });
+    this.npmInstall(null, null, function() {
 
-    this.spawnCommand('jspm', ['install']);
-    this.spawnCommand('gulp', ['build']);
+      this.spawnCommand('jspm', ['install'])
+        .on('exit', function() {
+
+          this.spawnCommand('gulp', ['build'])
+            .on('exit', function() {
+              this.spawnCommand('gulp', ['serve']);
+            }.bind(this))
+
+        }.bind(this));
+
+    }.bind(this));
   }
 });
