@@ -8,9 +8,8 @@ var os = require('os');
 describe('es6-babel:app', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../app'))
-      .inDir(path.join(os.tmpdir(), './temp-test'))
       .withOptions({ 'skip-install': true })
-      .withPrompt({
+      .withPrompts({
         someOption: true
       })
       .on('end', done);

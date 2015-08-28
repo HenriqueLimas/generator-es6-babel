@@ -4,10 +4,6 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 
 module.exports = yeoman.generators.Base.extend({
-  initializing: function () {
-    this.pkg = require('../package.json');
-  },
-
   prompting: function () {
     var done = this.async();
 
@@ -24,7 +20,7 @@ module.exports = yeoman.generators.Base.extend({
     }];
 
     this.prompt(prompts, function (props) {
-      this.someOption = props.someOption;
+      this.props = props;
 
       done();
     }.bind(this));
@@ -89,8 +85,11 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
+    if (this.options['skip-install']) {
+      return;
+    }
+
     this.installDependencies({
-      skipInstall: this.options['skip-install'],
       bower: false
     });
 

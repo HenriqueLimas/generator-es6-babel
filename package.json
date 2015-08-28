@@ -14,7 +14,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "pretest": "npm install",
+    "pretest": "npm install -g gulp@^3.8.11 && npm install -g jspm@^0.14.0 && npm install -g mocha && npm install",
     "test": "mocha"
   },
   "files": [
@@ -24,7 +24,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "^0.18.9",
+    "yeoman-generator": "^0.20.2",
     "chalk": "^1.0.0",
     "yosay": "^1.0.2"
   },
