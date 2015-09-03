@@ -33,38 +33,35 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     app: function() {
-      var basePath = '';
-
-      if (this.props.hasBootstrap) {
-        basePath = 'bootstrap/'
-      }
-
-      this.fs.copy(
-        this.templatePath(basePath + '_index.html'),
-        this.destinationPath('index.html')
-      );
-
-      this.fs.copy(
-        this.templatePath(basePath + '_package.json'),
+      this.fs.copyTpl(
+        this.templatePath('_package.json'),
         this.destinationPath('package.json'),
         this.props
       );
-
       this.fs.copy(
-        this.templatePath(basePath + '_config.js'),
+        this.templatePath('_gulpfile.js'),
+        this.destinationPath('gulpfile.js')
+      );
+      this.fs.copy(
+        this.templatePath('_config.js'),
         this.destinationPath('config.js')
       );
 
+      if (this.props.hasBootstrap) {
+        this.fs.copy(
+          this.templatePath('_index.html'),
+          this.destinationPath('index.html')
+        );
+      }
+
       this.fs.copy(
-        this.templatePath(basePath + 'src/_main.js'),
+        this.templatePath('src/_main.js'),
         this.destinationPath('src/main.js')
       );
-
       this.fs.copy(
         this.templatePath('src/user/_user.js'),
         this.destinationPath('src/user/user.js')
       );
-
       this.fs.copy(
         this.templatePath('src/user/_user-table.js'),
         this.destinationPath('src/user/user-table.js')
@@ -73,11 +70,6 @@ module.exports = yeoman.generators.Base.extend({
       this.fs.copy(
         this.templatePath('styles/_style.css'),
         this.destinationPath('styles/style.css')
-      );
-
-      this.fs.copy(
-        this.templatePath('_gulpfile.js'),
-        this.destinationPath('gulpfile.js')
       );
     },
 
@@ -105,18 +97,18 @@ module.exports = yeoman.generators.Base.extend({
       return;
     }
 
-    this.npmInstall(null, null, function() {
+    // this.npmInstall(null, null, function() {
 
-      this.spawnCommand('jspm', ['install'])
-        .on('exit', function() {
+    //   this.spawnCommand('jspm', ['install'])
+    //     .on('exit', function() {
 
-          this.spawnCommand('gulp', ['build'])
-            .on('exit', function() {
-              this.spawnCommand('gulp', ['serve']);
-            }.bind(this))
+    //       this.spawnCommand('gulp', ['build'])
+    //         .on('exit', function() {
+    //           this.spawnCommand('gulp', ['serve']);
+    //         }.bind(this))
 
-        }.bind(this));
+    //     }.bind(this));
 
-    }.bind(this));
+    // }.bind(this));
   }
 });
