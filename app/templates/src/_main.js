@@ -1,3 +1,4 @@
+<% if (hasBootstrap) { %>import 'twbs/bootstrap';<% } %>
 import {User} from './user/user';
 import {UserTable} from './user/user-table';
 

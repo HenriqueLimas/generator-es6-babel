@@ -33,31 +33,28 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     app: function() {
-      var basePath = '';
-
-      if (this.props.hasBootstrap) {
-        basePath = 'bootstrap/'
-      }
-
-      this.fs.copy(
-        this.templatePath(basePath + '_index.html'),
-        this.destinationPath('index.html')
+      this.fs.copyTpl(
+        this.templatePath('_index.html'),
+        this.destinationPath('index.html'),
+        this.props
       );
 
-      this.fs.copy(
-        this.templatePath(basePath + '_package.json'),
+      this.fs.copyTpl(
+        this.templatePath('_package.json'),
         this.destinationPath('package.json'),
         this.props
       );
 
-      this.fs.copy(
-        this.templatePath(basePath + '_config.js'),
-        this.destinationPath('config.js')
+      this.fs.copyTpl(
+        this.templatePath('_config.js'),
+        this.destinationPath('config.js'),
+        this.props
       );
 
-      this.fs.copy(
-        this.templatePath(basePath + 'src/_main.js'),
-        this.destinationPath('src/main.js')
+      this.fs.copyTpl(
+        this.templatePath('src/_main.js'),
+        this.destinationPath('src/main.js'),
+        this.props
       );
 
       this.fs.copy(
