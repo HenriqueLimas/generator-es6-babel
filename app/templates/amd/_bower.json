@@ -1,0 +1,11 @@
+{
+  "name": "es6-babel-model",
+  "version": "0.0.0",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}

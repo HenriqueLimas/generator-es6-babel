@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ES6 Babel Model</title>
+
+    <% if (hasBootstrap) { %><link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"><% } %>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+</head>
+
+<body>
+    <nav <% if (hasBootstrap) { %>class="navbar navbar-default navbar-fixed-top"<% } %>>
+        <div <% if (hasBootstrap) { %>class="container"<% } %>>
+            <div <% if (hasBootstrap) { %>class="navbar-header"<% } %>>
+                <a <% if (hasBootstrap) { %>class="navbar-brand"<% } %> href="/">
+                   Ecmascript 6
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div <% if (hasBootstrap) { %>class="jumbotron"<% } %>>
+        <div <% if (hasBootstrap) { %>class="container"<% } %>>
+            <h1>Hello, Ecmascript 6</h1>
+        </div>
+    </div>
+    <div <% if (hasBootstrap) { %>class="container"<% } %>>
+        <div <% if (hasBootstrap) { %>class="row"<% } %>>
+            <div <% if (hasBootstrap) { %>class="col-md-12"<% } %>>
+                <h3>User class</h3>
+                <table id="users" <% if (hasBootstrap) { %>class="table table-striped"<% } %>></table>
+            </div>
+        </div>
+    </div>
+
+    <% if (hasBootstrap) { %><script src="bower_components/jquery/dist/jquery.min.js"></script><% } %>
+    <% if (hasBootstrap) { %><script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script><% } %>
+    <script data-main="dist/main" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.js"></script>
+</body>
+
+</html>

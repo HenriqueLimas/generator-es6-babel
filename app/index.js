@@ -7,7 +7,6 @@ module.exports = yeoman.generators.Base.extend({
   prompting: function() {
     var done = this.async();
 
-    // Have Yeoman greet the user.
     this.log(yosay(
       'Welcome to the ' + chalk.red('ES6 Babel') + ' generator!'
     ));
@@ -22,6 +21,12 @@ module.exports = yeoman.generators.Base.extend({
       name: 'hasBootstrap',
       message: 'Do you want to use bootstrap?',
       default: true
+    }, {
+      type: 'list',
+      name: 'modules',
+      message: 'What type of modules do you want to use?',
+      choices: ['system', 'amd'],
+      default: 'system'
     }];
 
     this.prompt(prompts, function(props) {
@@ -33,37 +38,47 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     app: function() {
+      var modulePath = this.props.modules;
+
       this.fs.copyTpl(
-        this.templatePath('_index.html'),
+        this.templatePath(modulePath + '/_index.html'),
         this.destinationPath('index.html'),
         this.props
       );
 
       this.fs.copyTpl(
-        this.templatePath('_package.json'),
+        this.templatePath(modulePath + '/_package.json'),
         this.destinationPath('package.json'),
         this.props
       );
 
-      this.fs.copyTpl(
-        this.templatePath('_config.js'),
-        this.destinationPath('config.js'),
-        this.props
-      );
+      if (modulePath === 'system') {
+        this.fs.copyTpl(
+          this.templatePath('system/_config.js'),
+          this.destinationPath('config.js'),
+          this.props
+        );
+      } else if (modulePath === 'amd') {
+        this.fs.copyTpl(
+          this.templatePath('amd/_bower.json'),
+          this.destinationPath('bower.json'),
+          this.props
+        );
+      }
 
       this.fs.copyTpl(
-        this.templatePath('src/_main.js'),
+        this.templatePath(modulePath + '/src/_main.js'),
         this.destinationPath('src/main.js'),
         this.props
       );
 
       this.fs.copy(
-        this.templatePath('src/user/_user.js'),
+        this.templatePath(modulePath + '/src/user/_user.js'),
         this.destinationPath('src/user/user.js')
       );
 
       this.fs.copy(
-        this.templatePath('src/user/_user-table.js'),
+        this.templatePath(modulePath + '/src/user/_user-table.js'),
         this.destinationPath('src/user/user-table.js')
       );
 
@@ -72,9 +87,10 @@ module.exports = yeoman.generators.Base.extend({
         this.destinationPath('styles/style.css')
       );
 
-      this.fs.copy(
+      this.fs.copyTpl(
         this.templatePath('_gulpfile.js'),
-        this.destinationPath('gulpfile.js')
+        this.destinationPath('gulpfile.js'),
+        this.props
       );
     },
 
@@ -98,22 +114,24 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function() {
-    if (this.options['skip-install']) {
+    if (true || this.options['skip-install']) {
       return;
     }
 
     this.npmInstall(null, null, function() {
+      function startGulp() {
+        this.spawnCommand('gulp', ['build'])
+          .on('exit', function() {
+            this.spawnCommand('gulp', ['serve']);
+          }.bind(this));
+      }
 
-      this.spawnCommand('jspm', ['install'])
-        .on('exit', function() {
-
-          this.spawnCommand('gulp', ['build'])
-            .on('exit', function() {
-              this.spawnCommand('gulp', ['serve']);
-            }.bind(this))
-
-        }.bind(this));
-
+      if (this.props.modules === 'system') {
+        this.spawnCommand('jspm', ['install'])
+          .on('exit', startGulp.bind(this));
+      } else {
+        this.bowerInstall(null, null, startGulp.bind(this));
+      }
     }.bind(this));
   }
 });
