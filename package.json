@@ -14,6 +14,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
+    "preversion": "npm test",
     "pretest": "npm install -g gulp@^3.8.11 && npm install -g jspm@^0.14.0 && npm install -g mocha && npm install",
     "test": "mocha"
   },
